@@ -1,0 +1,1611 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Aurora's Portfolio</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Poppins:wght@500;700&display=swap" rel="stylesheet" />
+
+    <!-- Bootstrap v5.3 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr"
+      crossorigin="anonymous"
+    />
+
+    <style>
+      :root{
+        /* Palet warna */
+        --bg: #0b0f16;
+        --surface: #121826;
+        --surface-2: #0f1522;
+        --primary: #7c9cff;
+        --primary-600:#6b8df7;
+        --accent: #22d3ee;
+        --text: #e5e7eb;
+        --muted: #94a3b8;
+        --ring: rgba(124,156,255,.35);
+        --shadow: 0 10px 30px rgba(0,0,0,.25);
+        --radius: 16px;
+      }
+
+      html{
+        scroll-behavior: smooth;
+        scroll-padding-top: 84px; /* beri ruang saat loncat anchor */
+      }
+
+      body{
+        font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(1200px 1200px at 10% -20%, rgba(124,156,255,.08), transparent 60%),
+          radial-gradient(900px 900px at 110% 10%, rgba(34,211,238,.08), transparent 60%),
+          linear-gradient(180deg, #0a0f17 0%, #0b1120 100%);
+        overflow-x: hidden; /* hilangkan ruang kosong kanan */
+      }
+
+      /* Navbar */
+      .navbar{
+        backdrop-filter: blur(10px);
+        background: rgba(13,17,23,.55) !important;
+        border-bottom: 1px solid rgba(124,156,255,.15);
+      }
+      .navbar .navbar-brand{
+        font-family: "Poppins", sans-serif;
+        font-weight: 700;
+        letter-spacing:.5px;
+        color: var(--text);
+      }
+      .navbar .nav-link{
+        color: var(--muted);
+        transition: color .2s ease;
+      }
+      .navbar .nav-link.active,
+      .navbar .nav-link:hover{
+        color: var(--text);
+      }
+
+      /* Section wrapper */
+      section.section{
+        padding: clamp(64px, 8vw, 120px) 0;
+      }
+
+      .container-narrow{
+        max-width: 1080px;
+        margin: 0 auto;
+      }
+
+      /* Headings */
+      h2.section-title{
+        font-family: "Poppins", sans-serif;
+        font-weight: 700;
+        letter-spacing:.4px;
+        margin-bottom: 1.25rem;
+      }
+      .section-subtitle{
+        color: var(--muted);
+        margin-bottom: 2rem;
+      }
+
+      /* Card generic */
+      .card{
+        background: linear-gradient(180deg, var(--surface), var(--surface-2));
+        border: 1px solid rgba(148,163,184,.12);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+      }
+      .card:hover{
+        transform: translateY(-4px);
+        box-shadow: 0 14px 40px rgba(0,0,0,.35);
+        border-color: rgba(124,156,255,.35);
+      }
+      .card .card-img-top{
+        height: 220px;
+        object-fit: cover;
+        border-top-left-radius: var(--radius);
+        border-top-right-radius: var(--radius);
+      }
+
+      #project .card .card-title,
+      #social .card .card-title {
+        color: #ffffff !important;   /* putih */
+      }
+
+      /* Buttons */
+      .btn-primary{
+        background: linear-gradient(180deg, var(--primary), var(--primary-600));
+        border: none;
+        box-shadow: 0 6px 16px var(--ring);
+      }
+      .btn-primary:hover{
+        filter: brightness(.95);
+      }
+      .btn-outline{
+        border: 1px solid rgba(148,163,184,.25);
+        color: var(--text);
+      }
+      .btn-outline:hover{
+        border-color: var(--primary);
+        color: var(--text);
+      }
+
+      /* Tabs */
+      .nav-tabs{
+        border: none;
+        gap: .5rem;
+        flex-wrap: wrap;
+      }
+      .nav-tabs .nav-link{
+        border: 1px solid rgba(148,163,184,.22) !important;
+        color: var(--muted);
+        border-radius: 999px !important;
+        background: var(--surface-2);
+      }
+      .nav-tabs .nav-link.active{
+        color: var(--text);
+        background: linear-gradient(180deg, var(--primary), var(--primary-600));
+        border-color: transparent !important;
+      }
+
+      /* About */
+      .about-photo{
+        width: min(420px, 100%);
+        height: min(420px, 80vw);
+        border-radius: var(--radius);
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        border: 1px solid rgba(148,163,184,.12);
+        margin-inline: auto;
+      }
+      .about .desc{
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      /* Skill */
+      .skill-logos img{
+        width: 84px;
+        height: 84px;
+        object-fit: contain;
+        filter: drop-shadow(0 8px 18px rgba(0,0,0,.25));
+        transition: transform .2s ease, filter .2s ease;
+      }
+      .skill-logos img:hover{
+        transform: translateY(-4px);
+        filter: drop-shadow(0 12px 26px rgba(124,156,255,.25));
+      }
+
+      /* Carousels (Project/Social/Certificates) */
+      .carousel-item.flex-deck{
+        /* jangan set display di sini (biarkan default Bootstrap = none/block) */
+        align-items: stretch;
+        justify-content: center;
+        gap: 1.25rem;
+        padding: 1rem;
+        flex-wrap: wrap;
+      }
+
+      /* saat aktif, barulah jadi flex */
+      .carousel-item.flex-deck.active{
+        display: flex !important;
+      }
+      .carousel-deck .card{
+        width: clamp(260px, 28vw, 320px);
+      }
+
+      /* Jarak & kontrol carousel */
+      .carousel-control-prev,
+      .carousel-control-next{
+        width: 3rem;
+      }
+      .carousel-control-prev-icon,
+      .carousel-control-next-icon{
+        filter: drop-shadow(0 6px 12px rgba(0,0,0,.45));
+      }
+      .carousel-indicators [data-bs-target]{
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+      }
+
+      /* Perbesar area tombol */
+      .carousel-control-prev,
+      .carousel-control-next {
+        width: 60px;          /* default 15% atau auto, bisa dipaksa lebih lebar */
+        height: 60px;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(255, 255, 255, 0.8); /* latar belakang semi-transparan */
+        border-radius: 50%;   /* bulat */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color .2s ease, transform .2s ease;
+        box-shadow: 0 4px 12px rgba(0,0,0,.3);
+      }
+
+      /* Hover effect */
+      .carousel-control-prev:hover,
+      .carousel-control-next:hover {
+        background-color: rgba(255, 255, 255, 0.7);
+        transform: translateY(-50%) scale(1.1);
+      }
+
+      /* Perbesar ikon panah */
+      .carousel-control-prev-icon,
+      .carousel-control-next-icon {
+        width: 24px;
+        height: 24px;
+        filter: invert(1); /* biar putih kontras di background gelap */
+      }
+
+      /* Khusus gambar Soilink di modal */
+      #modalCarouselTech .carousel-item img[alt*="Soilink"] {
+        width: 100%;
+        height: auto;
+        max-height: 80vh;
+        object-fit: contain;   /* biar tidak terpotong */
+        background: #000;      /* rapih kalau ada ruang kosong */
+      }
+
+
+      /* Project + Content/Design/Tech card tweaks */
+      .card.content{
+        height: 440px;
+      }
+      .card.content .card-img-top{ height: 260px; }
+      .card.design .card-img-top{ height: 300px; }
+      .card.brand{
+        height: 420px;
+      }
+      .card.brand .card-img-top{ height: 260px; }
+
+      /* Certificates */
+      #certificate .carousel-item img{
+        display: block;
+        margin: 0 auto;
+        max-width: min(900px, 90%);
+        height: auto;
+        object-fit: contain;
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+      }
+
+      /* Contact */
+      .contact-icons img{
+        width: 34px;
+        transition: transform .2s ease, filter .2s ease;
+        filter: drop-shadow(0 6px 12px rgba(0,0,0,.35));
+      }
+      .contact-icons a:hover img{
+        transform: translateY(-3px);
+        filter: drop-shadow(0 10px 18px rgba(34,211,238,.35));
+      }
+
+      /* Utilities */
+      .pill{
+        display:inline-block;
+        padding:.35rem .7rem;
+        border-radius:999px;
+        font-size:.8rem;
+        background: rgba(124,156,255,.12);
+        border:1px solid rgba(124,156,255,.25);
+        color: var(--text);
+      }
+
+      /* Responsive adjustments */
+      @media (min-width: 992px){
+        /* geser kontrol carousel ke luar hanya di layar besar */
+        .deck-wide .carousel-control-prev{ transform: translateX(-24px); }
+        .deck-wide .carousel-control-next{ transform: translateX(24px); }
+      }
+      @media (max-width: 991.98px){
+        .navbar{
+          background: rgba(13,17,23,.85) !important;
+        }
+      }
+      @media (max-width: 575.98px){
+        .card .card-img-top{ height: 180px; }
+        .card.content{ height: auto; }
+        .card.content .card-img-top{ height: 200px; }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar fixed-top navbar-expand-lg">
+      <div class="container container-narrow">
+        <a class="navbar-brand" href="#about">Aurora</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain" aria-controls="navMain" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navMain">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+            <li class="nav-item"><a class="nav-link" href="#skill">Skill</a></li>
+            <li class="nav-item"><a class="nav-link" href="#project">Project</a></li>
+            <li class="nav-item"><a class="nav-link" href="#social">Social</a></li>
+            <li class="nav-item"><a class="nav-link" href="#certificate">Certificate</a></li>
+            <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- About -->
+    <section id="about" class="section about">
+      <div class="container container-narrow">
+        <div class="row align-items-center gy-4">
+          <div class="col-lg-5">
+            <div id="carouselAbout" class="carousel slide about-photo">
+              <div class="carousel-inner h-100">
+                <div class="carousel-item active h-100">
+                  <img src="img/1.jpeg" class="d-block w-100 h-100 object-fit-cover" alt="Aurora photo 1" />
+                </div>
+                <div class="carousel-item h-100">
+                  <img src="img/3.jpg" class="d-block w-100 h-100 object-fit-cover" alt="Aurora photo 2" />
+                </div>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselAbout" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselAbout" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+          </div>
+          <div class="col-lg-7">
+            <h2 class="section-title">Get to know me!</h2>
+            <p class="desc">
+              Fresh Graduate with strong skills in HTML, CSS, JavaScript, PHP, and Python. Experienced in Web Development, Machine Learning, and Data Analytics. Passionate about Content Planning & Video Editing. Strong communication, creativity, and responsibility.
+            </p>
+            <div class="d-flex gap-2 flex-wrap mt-3">
+              <span class="pill">Web Dev</span>
+              <span class="pill">Machine Learning</span>
+              <span class="pill">Data Analytics</span>
+              <span class="pill">Content Creator</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skill -->
+    <section id="skill" class="section skill">
+      <div class="container container-narrow">
+        <h2 class="section-title text-center">Skill</h2>
+        <p class="section-subtitle text-center">A quick snapshot of tools I use daily</p>
+        <div class="row row-cols-3 row-cols-md-6 g-4 skill-logos justify-content-center">
+          <div class="col text-center"><img src="img/php_icon.png" alt="PHP logo" /></div>
+          <div class="col text-center"><img src="img/js_icon.png" alt="JavaScript logo" /></div>
+          <div class="col text-center"><img src="img/css_icon.png" alt="CSS logo" /></div>
+          <div class="col text-center"><img src="img/html_icon.png" alt="HTML logo" /></div>
+          <div class="col text-center"><img src="img/python-logo.png" alt="Python logo" /></div>
+          <div class="col text-center"><img src="img/laravel_icon.png" alt="Laravel logo" /></div>
+          <div class="col text-center"><img src="img/bootstrap_icon.png" alt="Bootstrap logo" /></div>
+          <div class="col text-center"><img src="img/mysql_icon.png" alt="MySQL logo" /></div>
+          <div class="col text-center"><img src="img/pycharm-logo.png" alt="Pycharm logo" /></div>
+          <div class="col text-center"><img src="img/gcollab.png" alt="Gcollab logo" /></div>
+          <div class="col text-center"><img src="img/figma_icon.png" alt="Figma logo" /></div>
+          <div class="col text-center"><img src="img/canva_icon.png" alt="Canva logo" /></div>
+          <div class="col text-center"><img src="img/capcut_icon.png" alt="CapCut logo" /></div>
+          <div class="col text-center"><img src="img/mword_icon.png" alt="Microsoft Word logo" /></div>
+          <div class="col text-center"><img src="img/mexcel_icon.png" alt="Microsoft Excel logo" /></div>
+          <div class="col text-center"><img src="img/mppt_icon.png" alt="Microsoft PowerPoint logo" /></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Project -->
+    <section id="project" class="section project deck-wide">
+      <div class="container container-narrow">
+        <h2 class="section-title text-center">Projects</h2>
+        <ul class="nav nav-tabs justify-content-center mt-3" id="projectTabs" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="tech-tab" data-bs-toggle="tab" data-bs-target="#tech" type="button" role="tab">Tech</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="design-tab" data-bs-toggle="tab" data-bs-target="#design" type="button" role="tab">Design</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="content-creator-tab" data-bs-toggle="tab" data-bs-target="#content-creator" type="button" role="tab">Content Creator</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="brand-campaign-tab" data-bs-toggle="tab" data-bs-target="#brand-campaign" type="button" role="tab">Brand & Campaign</button>
+          </li>
+        </ul>
+
+        <div class="tab-content mt-4" id="projectTabContent">
+          <!-- TECH -->
+          <div class="tab-pane fade show active" id="tech" role="tabpanel">
+            <div id="carouselTech" class="carousel slide carousel-deck">
+              <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselTech" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselTech" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselTech" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                <button type="button" data-bs-target="#carouselTech" data-bs-slide-to="3" aria-label="Slide 4"></button>
+              </div>
+
+              <div class="carousel-inner">
+                <!-- Slide 1 -->
+                <div class="carousel-item active flex-deck">
+
+                  <div class="card">
+                    <img src="img/summary_1.png" class="card-img-top" alt="Summary PU" />
+                    <div class="card-body">
+                      <h5 class="card-title">RATE US PU</h5>
+                      <p class="card-text text-secondary">Laravel 11, Bootstrap 5, Larapex 2</p>
+                      <button class="btn btn-primary btn-sm"
+                        data-bs-toggle="modal" data-bs-target="#techModal"
+                        data-title="SUMMARY PU"
+                        data-images='["img/summary_1.png","img/summary_2.png","img/summary_3.png","img/summary_4.png"]'
+                        data-desc="Summary PU is a dashboard that provides an overview of survey results from various websites owned by the Kementerian Pekerjaan Umum. This dashboard presents insights based on surveys completed by respondents visiting each website.">
+                        View
+                      </button>
+                      <a href="https://gitlab.com/nadenggan/summary_pupr/" target="_blank" class="btn btn-outline btn-sm">Link</a>
+                    </div>
+                  </div>
+
+                  <div class="card">
+                    <img src="img/ept_1.png" class="card-img-top" alt="EPT" />
+                    <div class="card-body">
+                      <h5 class="card-title">English Proficiency Test</h5>
+                      <p class="card-text text-secondary">Laravel 10</p>
+                      <button class="btn btn-primary btn-sm"
+                        data-bs-toggle="modal" data-bs-target="#techModal"
+                        data-title="English Proficiency Test (EPT) Website"
+                        data-images='["img/ept_1.png","img/ept_2.png","img/ept_3.png","img/ept_4.png"]'
+                        data-desc="English Proficiency Test (EPT) website is made to provide information about English programs such as English language classes, EPT test schedules, and test registration. This website aims to assist students of UPN Veteran Jawa Timur in easily registering for the English Proficiency Test (EPT). My role includes managing features for English Proficiency Test (EPT) registration, creating  the database, and  control collaboration through GitHub.">
+                        View
+                      </button>
+                      <a href="https://github.com/nadenggan/ept_bahasa" target="_blank" class="btn btn-outline btn-sm">Link</a>
+                    </div>
+                  </div>
+
+                  <div class="card">
+                    <img src="img/scm_1.png" class="card-img-top" alt="Trello clone" />
+                    <div class="card-body">
+                      <h5 class="card-title">Trello Website</h5>
+                      <p class="card-text text-secondary">Laravel, Vue.js, Dbeaver</p>
+                      <button class="btn btn-primary btn-sm"
+                        data-bs-toggle="modal" data-bs-target="#techModal"
+                        data-title="Trello Website"
+                        data-images='["img/scm_1.png","img/scm_2.png","img/scm_3.png"]'
+                        data-desc="Trello is a paid application that allows users to easily manage tasks that are to be done, in progress, and completed. The main goal of developing this website is to provide an efficient project management solution without adding to the company's costs.">
+                        View
+                      </button>
+                      <a href="https://drive.google.com/file/d/1q4tI5IswzUCGYjapftympvh6SSlwRp9P/view?usp=sharing" target="_blank" class="btn btn-outline btn-sm">Link</a>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Slide 2 -->
+                <div class="carousel-item flex-deck">
+                  <div class="card">
+                    <img src="img/crm_1.jpg" class="card-img-top" alt="CRM" />
+                    <div class="card-body">
+                      <h5 class="card-title">CRM Website</h5>
+                      <p class="card-text text-secondary">Laravel 10</p>
+                      <button class="btn btn-primary btn-sm"
+                        data-bs-toggle="modal" data-bs-target="#techModal"
+                        data-title="Customer Relationship Management Website"
+                        data-images='["img/crm_1.jpg","img/crm_2.jpg","img/crm_3.jpg","img/crm_4.jpg"]'
+                        data-desc="CRM(Customer Relationship Management) Website is an integrated system that enables efficient management and monitoring of lead data. With advanced features, this platform assists the marketing team in tracking lead progress, improving response times, and maximizing conversions.  I manage features such as adding customer data via form or Excel, tracking data, updating lead status, maintaining activity logs, and exporting data leads.">
+                        View
+                      </button>
+                      <a href="https://gitlab.com/nadenggan/crm_project" target="_blank" class="btn btn-outline btn-sm">Link</a>
+                    </div>
+                  </div>
+
+                  <div class="card">
+                    <img src="img/demandailing_1.png" class="card-img-top" alt="Demandailing" />
+                    <div class="card-body">
+                      <h5 class="card-title">Demandailing Website</h5>
+                      <p class="card-text text-secondary">HTML, CSS, JavaScript, VSC</p>
+                      <button class="btn btn-primary btn-sm"
+                        data-bs-toggle="modal" data-bs-target="#techModal"
+                        data-title="Demandailing Website"
+                        data-images='["img/demandailing_1.png","img/demandailing_2.png","img/demandailing_3.png","img/demandailing_4.png"]'
+                        data-desc="Demandailing is a restaurant website that allows users to make reservations. The website is also used by the admin for reservation management. Responsible for the Front-end and using HTML, CSS, and Java Script programming languages.">
+                        View
+                      </button>
+                      <a href="https://github.com/shintyadhitawputri/demandailing" target="_blank" class="btn btn-outline btn-sm">Link</a>
+                    </div>
+                  </div>
+
+                  <div class="card">
+                    <img src="img/crud_1.png" class="card-img-top" alt="Manage Data" />
+                    <div class="card-body">
+                      <h5 class="card-title">Manage Data Website</h5>
+                      <p class="card-text text-secondary">Laravel 12, Bootstrap 4, AdminLTE 3</p>
+                      <button class="btn btn-primary btn-sm"
+                        data-bs-toggle="modal" data-bs-target="#techModal"
+                        data-title="Manage Data Website"
+                        data-images='["img/crud_1.png","img/crud_2.png","img/crud_3.png","img/crud_4.png"]'
+                        data-desc="Manage Data Web is a web application designed to manage customer data. It provides CRUD function, including adding, deleting, editing, and searching customer records. The application also integrates a map feature and displaying pinpoint locations for each customers. Users can export customer data to Excel or CSV for further analysis. The website offers several key features, including CRUD function, export data, and show map & pinpoin each locations. I’m is using Leaflet for the map.">
+                        View
+                      </button>
+                      <a href="https://gitlab.com/nadenggan/manage_data/" target="_blank" class="btn btn-outline btn-sm">Link</a>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Slide 3 -->
+                <div class="carousel-item flex-deck">
+                  <div class="card">
+                    <img src="img/mergepdf_2.png" class="card-img-top" alt="Merge PDF" />
+                    <div class="card-body">
+                      <h5 class="card-title">Merge PDF Feature</h5>
+                      <p class="card-text text-secondary">Laravel, Vue.js</p>
+                      <button class="btn btn-primary btn-sm"
+                        data-bs-toggle="modal" data-bs-target="#techModal"
+                        data-title="Merge PDF Feature"
+                        data-images='["img/mergepdf_2.png","img/mergepdf_3.png"]'
+                        data-desc="The development of the PDF merge feature on the Inovasi website involved identifying user needs and selecting the appropriate library for merging compressed PDFs. I was responsible for ensuring that the feature I developed functioned optimally according to the company's standards. For merging multiple PDF files into one, I use the karriere/pdf-merge library.">
+                        View
+                      </button>
+                      <a href="https://drive.google.com/file/d/1Fw2AxOE8O5kIeOtrvvYmGyiLNJQWsY4V/view?usp=sharing" target="_blank" class="btn btn-outline btn-sm">Link</a>
+                    </div>
+                  </div>
+
+                  <div class="card">
+                    <img src="img/formtemplate_2.png" class="card-img-top" alt="Form Template" />
+                    <div class="card-body">
+                      <h5 class="card-title">Form Template Feature</h5>
+                      <p class="card-text text-secondary">Laravel, Vue.js, DBeaver</p>
+                      <button class="btn btn-primary btn-sm"
+                        data-bs-toggle="modal" data-bs-target="#techModal"
+                        data-title="Form Template Feature"
+                        data-images='["img/formtemplate_2.png","img/formtemplate_3.png"]'
+                        data-desc="The development of the template feature on the Inovasi website is designed for users who want to create form templates that can be reused after being saved.">
+                        View
+                      </button>
+                      <a href="https://drive.google.com/file/d/1Fw2AxOE8O5kIeOtrvvYmGyiLNJQWsY4V/view?usp=sharing" target="_blank" class="btn btn-outline btn-sm">Link</a>
+                    </div>
+                  </div>
+
+                  <div class="card">
+                    <img src="img/tokobudaya_1.png" class="card-img-top" alt="Toko Budaya" />
+                    <div class="card-body">
+                      <h5 class="card-title">Toko Budaya Website</h5>
+                      <p class="card-text text-secondary">PHP, phpMyAdmin, VSC</p>
+                      <button class="btn btn-primary btn-sm"
+                        data-bs-toggle="modal" data-bs-target="#techModal"
+                        data-title="Toko Budaya Website"
+                        data-images='["img/tokobudaya_1.png","img/tokobudaya_2.png","img/tokobudaya_3.png","img/tokobudaya_4.png"]'
+                        data-desc="Toko Budaya is an e-commerce website with the aim of facilitating the efficient distribution of unique/local products from various regions. Therefore, the presence of this website is expected to provide a positive contribution, both for craftsmen, traditional craft, and art entrepreneurs, as well as consumers.I am responsible for the Back-end and use PHP programming language. I manage data for products in the database, handle the process of adding  products to the shopping cart, and the checkout process.">
+                        View
+                      </button>
+                      <a href="https://github.com/shintyadhitawputri/TokoBudaya" target="_blank" class="btn btn-outline btn-sm">Link</a>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Slide 4 -->
+                <div class="carousel-item flex-deck">
+                  <div class="card">
+                    <img src="img/healthcare_1.png" class="card-img-top" alt="Health Store" />
+                    <div class="card-body">
+                      <h5 class="card-title">Health Store Website</h5>
+                      <p class="card-text text-secondary">Laravel 10, Bootstrap 5, Mailjet</p>
+                      <button class="btn btn-primary btn-sm"
+                        data-bs-toggle="modal" data-bs-target="#techModal"
+                        data-title="Health Store Website"
+                        data-images='["img/healthcare_1.png","img/healthcare_2.png","img/healthcare_3.png","img/healthcare_4.png"]'
+                        data-desc="Health Store Website is an e-commerce platform that makes it easier for customers to purchase health-related products online. Customers need to create an account to purchase products. However, even without an account, they can browse through the available products. The website offers several key features, including adding products to the shopping cart, checking out products from the cart, selecting a payment method, and sending payment invoices to the registered customer's email. I’m is using Mailjet for sending emails.">
+                        View
+                      </button>
+                      <a href="https://gitlab.com/nadenggan/health_store" target="_blank" class="btn btn-outline btn-sm">Link</a>
+                    </div>
+                  </div>
+
+                  <div class="card">
+                    <img src="img/soilink_1.jpg" class="card-img-top" alt="Soilink App" />
+                    <div class="card-body">
+                      <h5 class="card-title">Soilink App</h5>
+                      <p class="card-text text-secondary">Python, Pycharm, Google Collab</p>
+                      <button class="btn btn-primary btn-sm"
+                        data-bs-toggle="modal" data-bs-target="#techModal"
+                        data-title="Soilink App"
+                        data-images='["img/soilink_1.jpg","img/soilink_2.jpg","img/soilink_3.jpg","img/soilink_4.jpg"]'
+                        data-desc="Soilink is a mobile application designed to providing essential information for selecting the right soil type for construction projects. This application can detect soil types through images captured using a camera or uploaded from the gallery.  I was responsible for building models and processing data. The soil image data processing was conducted using Google Drive to manage the dataset and Google Colab for data augmentation.
+I developed a model using MobileNetV2 from TensorFlow Hub, incorporating a Convolutional Neural Network (CNN) architecture. ">
+                        View
+                      </button>
+                      <a href="https://github.com/nazurinian/CH2-PS109" target="_blank" class="btn btn-outline btn-sm">Link</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselTech" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselTech" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- DESIGN -->
+          <div class="tab-pane fade" id="design" role="tabpanel">
+            <div id="designCarousel" class="carousel slide carousel-deck">
+              <div class="carousel-indicators">
+                <button type="button" data-bs-target="#designCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#designCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#designCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+              </div>
+
+              <div class="carousel-inner">
+                <!-- Slide 1 -->
+                <div class="carousel-item active flex-deck">
+                  <div class="card design">
+                    <img src="img/logo_2.png" class="card-img-top" alt="Logo" />
+                    <div class="card-body">
+                      <h6 class="card-title">LOGO</h6>
+                      <button class="btn btn-primary btn-sm"
+                        data-bs-toggle="modal" data-bs-target="#designModal"
+                        data-title="Logo"
+                        data-images='["img/logo_2.png","img/logo_3.png","img/logo_1.png"]'>
+                        View
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="card design">
+                    <img src="img/dreambook_1.png" class="card-img-top" alt="Dream Book" />
+                    <div class="card-body">
+                      <h6 class="card-title">Dream Book</h6>
+                      <button class="btn btn-primary btn-sm"
+                        data-bs-toggle="modal" data-bs-target="#designModal"
+                        data-title="Dream Book"
+                        data-images='["img/dreambook_1.png","img/dreambook_2.png","img/dreambook_3.png","img/dreambook_4.png","img/dreambook_5.png","img/dreambook_6.png"]'>
+                        View
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="card design">
+                    <img src="img/highlightstory_1.png" class="card-img-top" alt="Highlight Story" />
+                    <div class="card-body">
+                      <h6 class="card-title">Highlight Story</h6>
+                      <button class="btn btn-primary btn-sm"
+                        data-bs-toggle="modal" data-bs-target="#designModal"
+                        data-title="Highlight Story"
+                        data-images='["img/highlightstory_1.png","img/highlightstory_2.png","img/highlightstory_3.png","img/highlightstory_4.png","img/highlightstory_5.png","img/highlightstory_6.png"]'>
+                        View
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Slide 2 -->
+                <div class="carousel-item flex-deck">
+                  <div class="card design">
+                    <img src="img/storyinstagram_1.png" class="card-img-top" alt="Story Instagram" />
+                    <div class="card-body">
+                      <h6 class="card-title">Story Instagram</h6>
+                      <button class="btn btn-primary btn-sm"
+                        data-bs-toggle="modal" data-bs-target="#designModal"
+                        data-title="Story Instagram"
+                        data-images='["img/storyinstagram_1.png","img/storyinstagram_2.png","img/storyinstagram_3.png","img/storyinstagram_4.png"]'>
+                        View
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="card design">
+                    <img src="img/SIDAUR_1.png" class="card-img-top" alt="UI/UX SIDAUR" />
+                    <div class="card-body">
+                      <h6 class="card-title">UI/UX SIDAUR</h6>
+                      <div class="d-flex gap-2">
+                        <button class="btn btn-primary btn-sm"
+                          data-bs-toggle="modal" data-bs-target="#designModal"
+                          data-title="UI/UX SIDAUR"
+                          data-images='["img/SIDAUR_1.png","img/SIDAUR_2.png","img/SIDAUR_3.png"]'>
+                          View
+                        </button>
+                        <a href="https://www.figma.com/design/ktxqcNa7dgti6IjHT6ojMK/SiDaur?node-id=0-1" target="_blank" class="btn btn-outline btn-sm">Link</a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card design">
+                    <img src="img/indonesianculture_1.png" class="card-img-top" alt="UI/UX Lomba" />
+                    <div class="card-body">
+                      <h6 class="card-title">UI/UX Indonesian Culture</h6>
+                      <div class="d-flex gap-2">
+                        <button class="btn btn-primary btn-sm"
+                          data-bs-toggle="modal" data-bs-target="#designModal"
+                          data-title="UI/UX LOMBA"
+                          data-images='["img/indonesianculture_1.png","img/indonesianculture_2.png","img/indonesianculture_3.png","img/indonesianculture_5.png"]'>
+                          View
+                        </button>
+                        <a href="https://www.figma.com/design/49dSomB0uJwBm23poMc2rw/Indonesian-Culture?node-id=0-1" target="_blank" class="btn btn-outline btn-sm">Link</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Slide 3 -->
+                <div class="carousel-item flex-deck">
+                  <div class="card design">
+                    <img src="img/webbasada_1.png" class="card-img-top" alt="UI/UX BASADA" />
+                    <div class="card-body">
+                      <h6 class="card-title">UI/UX Website Bendahara Sekolah</h6>
+                      <div class="d-flex gap-2">
+                        <button class="btn btn-primary btn-sm"
+                          data-bs-toggle="modal" data-bs-target="#designModal"
+                          data-title="UI/UX Website Bendahara Sekolah"
+                          data-images='["img/webbasada_1.png","img/webbasada_2.png","img/webbasada_3.png","img/webbasada_4.png","img/webbasada_5.png"]'>
+                          View
+                        </button>
+                        <a href="https://www.figma.com/design/MUJxBJfz8Domo7EZw6vXKx/WEB-MONITORING-KEUANGAN-BASADA?node-id=2002-885" target="_blank" class="btn btn-outline btn-sm">Link</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <button class="carousel-control-prev" type="button" data-bs-target="#designCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#designCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- CONTENT CREATOR -->
+          <div class="tab-pane fade" id="content-creator" role="tabpanel">
+            <div id="contentCarousel" class="carousel slide carousel-deck">
+              <div class="carousel-indicators">
+                <button type="button" data-bs-target="#contentCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#contentCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#contentCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                <button type="button" data-bs-target="#contentCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                <button type="button" data-bs-target="#contentCarousel" data-bs-slide-to="4" aria-label="Slide 5"></button>
+              </div>
+
+              <div class="carousel-inner">
+                <!-- Slide 1 -->
+                <div class="carousel-item active flex-deck">
+                  <div class="card content">
+                    <img src="img/cc_bangkit.jpg" class="card-img-top" alt="Bangkit Paket" />
+                    <div class="card-body">
+                      <h6 class="card-title">Buka Paket dari BANGKIT</h6>
+                      <p class="card-text text-secondary">Short unboxing reel</p>
+                      <a href="https://www.instagram.com/reel/C5idHTAJNei/" target="_blank" class="btn btn-outline btn-sm">Link</a>
+                    </div>
+                  </div>
+
+                  <div class="card content">
+                    <img src="img/cc_sgp.jpg" class="card-img-top" alt="SG Food" />
+                    <div class="card-body">
+                      <h6 class="card-title">What I Eat at Singapore</h6>
+                      <p class="card-text text-secondary">Travel food diary</p>
+                      <a href="https://vt.tiktok.com/ZSkE1o8o6/" target="_blank" class="btn btn-outline btn-sm">Link</a>
+                    </div>
+                  </div>
+
+                  <div class="card content">
+                    <img src="img/cc_bedak.jpg" class="card-img-top" alt="Loose Powder vs Translucent" />
+                    <div class="card-body">
+                      <h6 class="card-title">Loose Powder vs Translucent</h6>
+                      <p class="card-text text-secondary">Beauty explainer</p>
+                      <a href="https://vt.tiktok.com/ZSN2pK5UJ/" target="_blank" class="btn btn-outline btn-sm">Link</a>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Slide 2 -->
+                <div class="carousel-item flex-deck">
+                  <div class="card content">
+                    <img src="img/cc_comment.jpg" class="card-img-top" alt="Etika Komentar" />
+                    <div class="card-body">
+                      <h6 class="card-title">Etika Berkomentar di Sosmed</h6>
+                      <p class="card-text text-secondary">Digital literacy</p>
+                      <a href="https://www.instagram.com/tv/Ce1BChqJxZZ/" target="_blank" class="btn btn-outline btn-sm">Link</a>
+                    </div>
+                  </div>
+
+                  <div class="card content">
+                    <img src="img/cc_day in campus.jpg" class="card-img-top" alt="A Day in Campus" />
+                    <div class="card-body">
+                      <h6 class="card-title">A Day in Campus</h6>
+                      <p class="card-text text-secondary">Campus life vlog</p>
+                      <a href="https://www.instagram.com/reel/CpSa40zpOGv/" target="_blank" class="btn btn-outline btn-sm">Link</a>
+                    </div>
+                  </div>
+
+                  <div class="card content">
+                    <img src="img/cc_fixed&growth mindset.jpg" class="card-img-top" alt="Mindset" />
+                    <div class="card-body">
+                      <h6 class="card-title">Fixed vs Growth Mindset</h6>
+                      <p class="card-text text-secondary">Learning mindset</p>
+                      <a href="https://www.linkedin.com/posts/nadenggansrgr_lifeatbangkit-growthmindsetchallenge-activity-7117290637254672384-XUbJ" target="_blank" class="btn btn-outline btn-sm">Link</a>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Slide 3 -->
+                <div class="carousel-item flex-deck">
+                  <div class="card content">
+                    <img src="img/cc_magang.jpg" class="card-img-top" alt="Intern Day" />
+                    <div class="card-body">
+                      <h6 class="card-title">Intern Day</h6>
+                      <p class="card-text text-secondary">Daily routine</p>
+                      <a href="https://vt.tiktok.com/ZSkEe2gMd/" target="_blank" class="btn btn-outline btn-sm">Link</a>
+                    </div>
+                  </div>
+
+                  <div class="card content">
+                    <img src="img/cc_makan diluar1.jpg" class="card-img-top" alt="Makan-makan 1" />
+                    <div class="card-body">
+                      <h6 class="card-title">Makan-makan di luar</h6>
+                      <p class="card-text text-secondary">Food vlog</p>
+                      <a href="https://vt.tiktok.com/ZSkEJJFxX/" target="_blank" class="btn btn-outline btn-sm">Link</a>
+                    </div>
+                  </div>
+
+                  <div class="card content">
+                    <img src="img/cc_makan diluar2.jpg" class="card-img-top" alt="Bukber" />
+                    <div class="card-body">
+                      <h6 class="card-title">Buka Puasa di luar</h6>
+                      <p class="card-text text-secondary">Food diary</p>
+                      <a href="https://vt.tiktok.com/ZSkEJnNR6/" target="_blank" class="btn btn-outline btn-sm">Link</a>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Slide 4 -->
+                <div class="carousel-item flex-deck">
+                  <div class="card content">
+                    <img src="img/cc_makan diluar3.jpg" class="card-img-top" alt="Bukber 2" />
+                    <div class="card-body">
+                      <h6 class="card-title">Buka Puasa di luar</h6>
+                      <p class="card-text text-secondary">Food diary</p>
+                      <a href="https://vt.tiktok.com/ZSkEJWHP5/" target="_blank" class="btn btn-outline btn-sm">Link</a>
+                    </div>
+                  </div>
+
+                  <div class="card content">
+                    <img src="img/cc_makan diluar4.jpg" class="card-img-top" alt="Pasar Oro-oro Dowo" />
+                    <div class="card-body">
+                      <h6 class="card-title">Pasar Oro-oro Dowo</h6>
+                      <p class="card-text text-secondary">Local market</p>
+                      <a href="https://drive.google.com/file/d/1YIO04lFRUUxqW3ikNKDZW_aETFAP2BIc/view" target="_blank" class="btn btn-outline btn-sm">Link</a>
+                    </div>
+                  </div>
+
+                  <div class="card content">
+                    <img src="img/cc_makan diluar5.jpg" class="card-img-top" alt="Makan 3" />
+                    <div class="card-body">
+                      <h6 class="card-title">Makan di luar</h6>
+                      <p class="card-text text-secondary">Food diary</p>
+                      <a href="https://vt.tiktok.com/ZSN2pwamK/" target="_blank" class="btn btn-outline btn-sm">Link</a>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Slide 5 -->
+                <div class="carousel-item flex-deck">
+                  <div class="card content">
+                    <img src="img/cc_makan with roriz1.jpg" class="card-img-top" alt="Roriz Sushi" />
+                    <div class="card-body">
+                      <h6 class="card-title">Makan with Roriz (Sushi)</h6>
+                      <p class="card-text text-secondary">Food diary</p>
+                      <a href="https://vt.tiktok.com/ZSkEJHaDk/" target="_blank" class="btn btn-outline btn-sm">Link</a>
+                    </div>
+                  </div>
+
+                  <div class="card content">
+                    <img src="img/cc_makan with roriz3.jpg" class="card-img-top" alt="Roriz Korea" />
+                    <div class="card-body">
+                      <h6 class="card-title">Makan with Roriz (Korean Food)</h6>
+                      <p class="card-text text-secondary">Food diary</p>
+                      <a href="https://vt.tiktok.com/ZSkEJHUA9/" target="_blank" class="btn btn-outline btn-sm">Link</a>
+                    </div>
+                  </div>
+
+                  <div class="card content">
+                    <img src="img/cc_makeup.jpg" class="card-img-top" alt="Makeup" />
+                    <div class="card-body">
+                      <h6 class="card-title">Makeup With Rora</h6>
+                      <p class="card-text text-secondary">Beauty</p>
+                      <a href="https://vt.tiktok.com/ZSN2p7Thh/" target="_blank" class="btn btn-outline btn-sm">Link</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <button class="carousel-control-prev" type="button" data-bs-target="#contentCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#contentCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- BRAND & CAMPAIGN -->
+          <div class="tab-pane fade" id="brand-campaign" role="tabpanel">
+            <div class="d-flex justify-content-center gap-4 flex-wrap">
+              <div class="card brand" style="width: 18rem;">
+                <img src="img/logo_cipit_cemil.png" class="card-img-top" alt="Food Business" />
+                <div class="card-body">
+                  <h5 class="card-title">Food Business</h5>
+                  <p class="card-text text-secondary">Canva, CapCut</p>
+                  <button
+                    class="btn btn-primary btn-sm"
+                    data-bs-toggle="modal" data-bs-target="#brandModal"
+                    data-brand-title="Food Business"
+                    data-brand-desc="CipitCemil is my own food business brand specializing in corndogs and garlic chicken. I handle the entire process end-to-end from product development, photoshoots, content editing, and video production, to campaign strategy and customer engagement. Running this business has sharpened my entrepreneurial spirit, boosted my creativity, and strengthened my marketing skills."
+                    data-brand-logo="img/logo_cipit_cemil.png"
+                    data-brand-poster='["img/poster1_cipitcemil.png","img/poster2_cipitcemil.png","img/catalog_cipitcemil.png"]'
+                    data-brand-testi='["img/testi_cipitcemil.png","img/documentation1_cipitcemil.png","img/documentation2_cipitcemil.png"]'
+                    data-brand-link='["https://www.instagram.com/cipitcemil/","https://www.instagram.com/reel/DHP5iGkSKAp/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=="]'
+                  >
+                    View
+                  </button>
+                </div>
+              </div>
+
+              <div class="card brand" style="width: 18rem;">
+                <img src="img/logo_joki.png" class="card-img-top" alt="IT Business" />
+                <div class="card-body">
+                  <h5 class="card-title">IT Business</h5>
+                  <p class="card-text text-secondary">Canva, CapCut</p>
+                  <button
+                    class="btn btn-primary btn-sm"
+                    data-bs-toggle="modal" data-bs-target="#brandModal"
+                    data-brand-title="IT Business"
+                    data-brand-desc="JokiInformatika is an independent IT service brand where I handle everything on my own — from designing campaign materials and developing solutions to executing client projects. I manage the entire process end-to-end, ensuring every detail is aligned with creativity, efficiency, and client needs.
+                    "
+                    data-brand-logo="img/logo_joki.png"
+                    data-brand-poster='["img/order_joki.png","img/price_joki.png","img/catalog_joki.png","img/payment_joki.png"]'
+                    data-brand-testi='["img/testi1_joki.png","img/testi2_joki.png","img/testi3_joki.png"]'
+                    data-brand-link='["https://www.instagram.com/jokiinformatika81/","https://www.instagram.com/reel/CqAyCNXpCbl/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=="]'
+                  >
+                    View
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div><!-- /tab-content -->
+      </div>
+    </section>
+
+    <!-- SOCIAL -->
+    <section id="social" class="section social">
+      <div class="container container-narrow">
+        <h2 class="section-title text-center">Social & Leadership</h2>
+        <div id="socialCarousel" class="carousel slide carousel-deck mt-3">
+          <div class="carousel-indicators">
+            <button type="button" data-bs-target="#socialCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#socialCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#socialCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+          </div>
+
+          <div class="carousel-inner">
+            <!-- Slide 1 -->
+            <div class="carousel-item active flex-deck">
+              <div class="card">
+                <img src="img/leader_project_1.jpg" class="card-img-top" alt="Leadership Project" />
+                <div class="card-body">
+                  <h5 class="card-title">Leadership Project</h5>
+                  <p class="card-text text-secondary">Oktober 2024</p>
+                  <button
+                    class="btn btn-primary btn-sm"
+                    data-bs-toggle="modal" data-bs-target="#socialModal"
+                    data-soc-title="Leadership Project"
+                    data-soc-role="Tutor"
+                    data-soc-images='["img/leader_project_1.jpg","img/leader_project_2.jpg"]'
+                    data-soc-tasks='["Taught childrens about recycle","Created materials using Canva","95% of the children successfully practiced recycling","100% of the event timeline ran according to the rundown"]'
+                  >View</button>
+                </div>
+              </div>
+
+              <div class="card">
+                <img src="img/kkn_1.jpg" class="card-img-top" alt="KKN" />
+                <div class="card-body">
+                  <h5 class="card-title">KKN (Kuliah Kerja Nyata)</h5>
+                  <p class="card-text text-secondary">November 2023</p>
+                  <button
+                    class="btn btn-primary btn-sm"
+                    data-bs-toggle="modal" data-bs-target="#socialModal"
+                    data-soc-title="KKN (Kuliah Kerja Nyata)"
+                    data-soc-role="Head of Event Division"
+                    data-soc-images='["img/kkn_1.jpg","img/kkn_2.jpg","img/kkn_3.jpg","img/kkn_4.jpg"]'
+                    data-soc-tasks='["Coordinated with staff and students at SMK N 1 Mojoanyar Mojokerto","Guide 1 group to learn Excel","Assessed final projects for 6 groups involving 30+ students"]'
+                  >View</button>
+                </div>
+              </div>
+
+              <div class="card">
+                <img src="img/mbkm_1.jpg" class="card-img-top" alt="MSIB FAIR" />
+                <div class="card-body">
+                  <h5 class="card-title">MSIB Socialization</h5>
+                  <p class="card-text text-secondary">Agustus 2023</p>
+                  <button
+                    class="btn btn-primary btn-sm"
+                    data-bs-toggle="modal" data-bs-target="#socialModal"
+                    data-soc-title="MSIB Socialization"
+                    data-soc-role="Head of Event Division"
+                    data-soc-images='["img/mbkm_1.jpg","img/mbkm_2.jpg"]'
+                    data-soc-tasks='["Leading  5 members of event division for manage the concept", "Assisted and directed 8 company", "Succesfully get 100+ participants", "Organize and monitor during the event"]'
+                  >View</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="carousel-item flex-deck">
+              <div class="card">
+                <img src="img/abdi_desa_1.jpg" class="card-img-top" alt="Abdi Desa" />
+                <div class="card-body">
+                  <h5 class="card-title">Abdi Desa</h5>
+                  <p class="card-text text-secondary">Agustus 2022</p>
+                  <button
+                    class="btn btn-primary btn-sm"
+                    data-bs-toggle="modal" data-bs-target="#socialModal"
+                    data-soc-title="Abdi Desa"
+                    data-soc-role="Staff of Event Division"
+                    data-soc-images='["img/abdi_desa_1.jpg","img/abdi_desa_2.jpg","img/abdi_desa_4.jpg"]'
+                    data-soc-tasks='["Teaching mathematics to 4th grade students at Duyung Elementary School", "Organize and monitor the Fun Day event (competition for children)", "Concept the event’s for learning activities with children"]'
+                  >View</button>
+                </div>
+              </div>
+
+              <div class="card">
+                <img src="img/fwf.jpg" class="card-img-top" alt="FWF" />
+                <div class="card-body">
+                  <h5 class="card-title">Fun Day With Fasilkom</h5>
+                  <p class="card-text text-secondary">Juli 2022</p>
+                  <button
+                    class="btn btn-primary btn-sm"
+                    data-bs-toggle="modal" data-bs-target="#socialModal"
+                    data-soc-title="Fun Day With Fasilkom"
+                    data-soc-role="Chief Executive"
+                    data-soc-images='["img/fwf.jpg","img/fwf_2.jpg","img/fwf_3.jpg","img/fwf_4.png"]'
+                    data-soc-tasks='["Lead 22 staffs of 5 sub-divisions", "Successfully reach the target, 95% participant understand the knowledge", "Successfully collaborated with Dinas Sosial Kota Surabaya and UPTD Kampung Anak Negeri"]'
+                  >View</button>
+                </div>
+              </div>
+
+              <div class="card">
+                <img src="img/dondar_1.jpg" class="card-img-top" alt="Donor Darah" />
+                <div class="card-body">
+                  <h5 class="card-title">Donor Darah Fasilkom</h5>
+                  <p class="card-text text-secondary">Agustus 2022</p>
+                  <button
+                    class="btn btn-primary btn-sm"
+                    data-bs-toggle="modal" data-bs-target="#socialModal"
+                    data-soc-title="Donor Darah Fasilkom"
+                    data-soc-role="Deputy Chief Executive"
+                    data-soc-images='["img/dondar_1.jpg","img/dondar_2.jpg","img/dondar_3.jpg"]'
+                    data-soc-tasks='["Lead 19 staffs of 4 sub-divisions", "Succesfully get 70+ participants", "Successfully collaborated with PMI Surabaya"]'
+                  >View</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="carousel-item flex-deck">
+              <div class="card">
+                <img src="img/upn_mengajar.jpeg" class="card-img-top" alt="UPN Mengajar" />
+                <div class="card-body">
+                  <h5 class="card-title">UPN Mengajar Jilid VIII</h5>
+                  <p class="card-text text-secondary">Mei 2022</p>
+                  <button
+                    class="btn btn-primary btn-sm"
+                    data-bs-toggle="modal" data-bs-target="#socialModal"
+                    data-soc-title="UPN Mengajar Jilid VIII"
+                    data-soc-role="Staff of Public Relation"
+                    data-soc-images='["img/upn_mengajar.jpeg"]'
+                    data-soc-tasks='["Teach children how to create crafts", "Successfully collaborated with Medokan Ayu Orphanage", "Got 3 potential collaboration partners for the event"]'
+                  >View</button>
+                </div>
+              </div>
+
+              <div class="card">
+                <img src="img/mosaik_1.jpg" class="card-img-top" alt="MOSAIK" />
+                <div class="card-body">
+                  <h5 class="card-title">MOSAIK 2022</h5>
+                  <p class="card-text text-secondary">Juni 2022</p>
+                  <button
+                    class="btn btn-primary btn-sm"
+                    data-bs-toggle="modal" data-bs-target="#socialModal"
+                    data-soc-title="MOSAIK 2022"
+                    data-soc-role="Staff of Event Division"
+                    data-soc-images='["img/mosaik_1.jpg", "img/mosaik_2.jpg", "img/mosaik_3.png"]'
+                    data-soc-tasks='["Organise, schedule, and make pre-test and pos-test with Google Form", "Concept the event’s timeline and arrange the regulations during the event", "Coordinate with the equipment division during the event"]'
+                  >View</button>
+                </div>
+              </div>
+
+              <!-- <div class="card">
+                <img src="img/dondar_1.jpg" class="card-img-top" alt="Fasilkom Mengajar" />
+                <div class="card-body">
+                  <h5 class="card-title">Fasilkom Mengajar</h5>
+                  <p class="card-text text-secondary">Agustus 2021</p>
+                  <button
+                    class="btn btn-primary btn-sm"
+                    data-bs-toggle="modal" data-bs-target="#socialModal"
+                    data-soc-title="Fasilkom Mengajar"
+                    data-soc-role="Math Tutor"
+                    data-soc-images='["img/dondar_1.jpg","img/dondar_2.jpg","img/dondar_3.jpg"]'
+                    data-soc-tasks='["Preparing math materials suitable for the children", "Teach 10+ students about mathematical concepts"]'
+                  >View</button>
+                </div>
+              </div> -->
+            </div>
+          </div>
+
+          <button class="carousel-control-prev" type="button" data-bs-target="#socialCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#socialCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CERTIFICATES -->
+    <section id="certificate" class="section certificate">
+      <div class="container container-narrow">
+        <h2 class="section-title text-center">Certificates</h2>
+
+        <ul class="nav nav-tabs justify-content-center mt-3" id="certTabs" role="tablist">
+          <li class="nav-item" role="presentation"><button class="nav-link active" id="competition-tab" data-bs-toggle="tab" data-bs-target="#competition-pane" type="button" role="tab">Competition</button></li>
+          <li class="nav-item" role="presentation"><button class="nav-link" id="tech-cert-tab" data-bs-toggle="tab" data-bs-target="#tech-cert-pane" type="button" role="tab">Tech</button></li>
+          <li class="nav-item" role="presentation"><button class="nav-link" id="org-tab" data-bs-toggle="tab" data-bs-target="#org-pane" type="button" role="tab">Organization & Volunteer</button></li>
+          <li class="nav-item" role="presentation"><button class="nav-link" id="eng-tab" data-bs-toggle="tab" data-bs-target="#eng-pane" type="button" role="tab">English Test</button></li>
+          <li class="nav-item" role="presentation"><button class="nav-link" id="intern-tab" data-bs-toggle="tab" data-bs-target="#intern-pane" type="button" role="tab">Intern & Bootcamp</button></li>
+        </ul>
+
+        <div class="tab-content mt-4" id="certTabContent">
+          <!-- Competition -->
+          <div class="tab-pane fade show active" id="competition-pane" role="tabpanel">
+            <div id="carouselCompetitionCertificate" class="carousel slide">
+              <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselCompetitionCertificate" data-bs-slide-to="0" class="active" aria-current="true"></button>
+                <button type="button" data-bs-target="#carouselCompetitionCertificate" data-bs-slide-to="1"></button>
+              </div>
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <img src="img/3rd Winner Web Competitive Programming.jpg" alt="3rd Winner Web Competitive Programming" />
+                </div>
+                <div class="carousel-item">
+                  <img src="img/UIUX Competition.jpg" alt="UI/UX Competition" />
+                </div>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselCompetitionCertificate" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselCompetitionCertificate" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Tech -->
+          <div class="tab-pane fade" id="tech-cert-pane" role="tabpanel">
+            <div id="carouselTechCertificate" class="carousel slide">
+              <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselTechCertificate" data-bs-slide-to="0" class="active" aria-current="true"></button>
+                <button type="button" data-bs-target="#carouselTechCertificate" data-bs-slide-to="1"></button>
+                <button type="button" data-bs-target="#carouselTechCertificate" data-bs-slide-to="2"></button>
+                <button type="button" data-bs-target="#carouselTechCertificate" data-bs-slide-to="3"></button>
+                <button type="button" data-bs-target="#carouselTechCertificate" data-bs-slide-to="4"></button>
+                <button type="button" data-bs-target="#carouselTechCertificate" data-bs-slide-to="5"></button>
+                <button type="button" data-bs-target="#carouselTechCertificate" data-bs-slide-to="6"></button>
+                <button type="button" data-bs-target="#carouselTechCertificate" data-bs-slide-to="7"></button>
+                <button type="button" data-bs-target="#carouselTechCertificate" data-bs-slide-to="8"></button>
+                <button type="button" data-bs-target="#carouselTechCertificate" data-bs-slide-to="9"></button>
+                <button type="button" data-bs-target="#carouselTechCertificate" data-bs-slide-to="10"></button>
+                <button type="button" data-bs-target="#carouselTechCertificate" data-bs-slide-to="11"></button>
+                <button type="button" data-bs-target="#carouselTechCertificate" data-bs-slide-to="12"></button>
+                <button type="button" data-bs-target="#carouselTechCertificate" data-bs-slide-to="13"></button>
+                <button type="button" data-bs-target="#carouselTechCertificate" data-bs-slide-to="14"></button>
+                <button type="button" data-bs-target="#carouselTechCertificate" data-bs-slide-to="15"></button>
+                <button type="button" data-bs-target="#carouselTechCertificate" data-bs-slide-to="16"></button>
+                <button type="button" data-bs-target="#carouselTechCertificate" data-bs-slide-to="17"></button>
+              </div>
+              <div class="carousel-inner">
+                <div class="carousel-item active"><img src="img/Tensorflow Certificate _page-0001.jpg" alt="Tensorflow" /></div>
+                <div class="carousel-item"><img src="img/TensorFlow Data and Deployment Specialization (Coursera)_page-0001.jpg" alt="TF Data & Deployment" /></div>
+                <div class="carousel-item"><img src="img/DeepLearning.AI TensorFlow Developer Professional Certificate (Coursera)_page-0001.jpg" alt="TF Developer" /></div>
+                <div class="carousel-item"><img src="img/Machine Learning Specialization_page-0001.jpg" alt="ML Spec" /></div>
+                <div class="carousel-item"><img src="img/Structuring Machine Learning Projects (Coursera)_page-0001.jpg" alt="Structuring ML" /></div>
+                <div class="carousel-item"><img src="img/Mathematics for Machine Learning and Data Science Specialization_page-0001.jpg" alt="Math for ML" /></div>
+
+                <div class="carousel-item"><img src="img/Foundations_ Data, Data, Everywhere_page-0001.jpg" alt="Foundations Data" /></div>
+                <div class="carousel-item"><img src="img/Ask Questions to Make Data-Driven Decisions.jpg" alt="Ask Questions" /></div>
+                <div class="carousel-item"><img src="img/Prepare Data for Exploration_page-0001.jpg" alt="Prepare Data" /></div>
+                <div class="carousel-item"><img src="img/Process Data from Dirty to Clean_page-0001.jpg" alt="Process Data" /></div>
+                <div class="carousel-item"><img src="img/Analyze Data to Answer Questions.jpg" alt="Analyze Data" /></div>
+                <div class="carousel-item"><img src="img/Share Data Through the Art of Visualization_page-0001.jpg" alt="Share Data" /></div>
+
+                <div class="carousel-item"><img src="img/Crash Course on Python_page-0001.jpg" alt="Python Crash" /></div>
+                <div class="carousel-item"><img src="img/Using Python to Interact with the Operating System_page-0001.jpg" alt="Python OS" /></div>
+                <div class="carousel-item"><img src="img/Introduction to Git and GitHub_page-0001.jpg" alt="Git & GitHub" /></div>
+                <div class="carousel-item"><img src="img/Javascript Certificate_page-0001.jpg" alt="JS Cert" /></div>
+                <div class="carousel-item"><img src="img/OOP Concept Javascript_page-0001.jpg" alt="OOP JS" /></div>
+                <div class="carousel-item"><img src="img/Learn AJAX & WEB API_page-0001.jpg" alt="AJAX & API" /></div>
+                <div class="carousel-item"><img src="img/Learn Jquery_page-0001.jpg" alt="jQuery" /></div>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselTechCertificate" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselTechCertificate" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Organization -->
+          <div class="tab-pane fade" id="org-pane" role="tabpanel">
+            <div id="carouselOrganizationCertificate" class="carousel slide">
+              <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselOrganizationCertificate" data-bs-slide-to="0" class="active" aria-current="true"></button>
+                <button type="button" data-bs-target="#carouselOrganizationCertificate" data-bs-slide-to="1"></button>
+                <button type="button" data-bs-target="#carouselOrganizationCertificate" data-bs-slide-to="2"></button>
+                <button type="button" data-bs-target="#carouselOrganizationCertificate" data-bs-slide-to="3"></button>
+                <button type="button" data-bs-target="#carouselOrganizationCertificate" data-bs-slide-to="4"></button>
+                <button type="button" data-bs-target="#carouselOrganizationCertificate" data-bs-slide-to="5"></button>
+              </div>
+              <div class="carousel-inner">
+                <div class="carousel-item active"><img src="img/BEM FASILKOM ( Secretary of Public).jpg" alt="BEM" /></div>
+                <div class="carousel-item"><img src="img/UPN MENGAJAR.jpg" alt="UPN Mengajar" /></div>
+                <div class="carousel-item"><img src="img/MOSAIK.jpg" alt="MOSAIK" /></div>
+                <div class="carousel-item"><img src="img/Abdi Desa.jpeg" alt="Abdi Desa" /></div>
+                <div class="carousel-item"><img src="img/Sertif FWF.jpg" alt="FWF" /></div>
+                <div class="carousel-item"><img src="img/Sertifikat Donor Darah.jpg" alt="Donor Darah" /></div>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselOrganizationCertificate" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselOrganizationCertificate" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              </button>
+            </div>
+          </div>
+
+          <!-- English -->
+          <div class="tab-pane fade" id="eng-pane" role="tabpanel">
+            <div id="carouselEnglishCertificate" class="carousel slide">
+              <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselEnglishCertificate" data-bs-slide-to="0" class="active" aria-current="true"></button>
+                <button type="button" data-bs-target="#carouselEnglishCertificate" data-bs-slide-to="1"></button>
+              </div>
+              <div class="carousel-inner">
+                <div class="carousel-item active"><img src="img/English Proficiency Test.jpg" alt="EPT" /></div>
+                <div class="carousel-item"><img src="img/English for Business Communication.jpg" alt="Business English" /></div>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselEnglishCertificate" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselEnglishCertificate" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Intern -->
+          <div class="tab-pane fade" id="intern-pane" role="tabpanel">
+            <div id="carouselInternCertificate" class="carousel slide">
+              <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselInternCertificate" data-bs-slide-to="0" class="active" aria-current="true"></button>
+                <button type="button" data-bs-target="#carouselInternCertificate" data-bs-slide-to="1"></button>
+                <button type="button" data-bs-target="#carouselInternCertificate" data-bs-slide-to="2"></button>
+                <button type="button" data-bs-target="#carouselInternCertificate" data-bs-slide-to="3"></button>
+              </div>
+              <div class="carousel-inner">
+                <div class="carousel-item active"><img src="img/SCM (Backend Developer Intern).jpg" alt="SCM Intern" /></div>
+                <div class="carousel-item"><img src="img/Ministry(Web Developer Intern).jpg" alt="Ministry Intern" /></div>
+                <div class="carousel-item"><img src="img/Digistar (Backend Developer Student).jpg" alt="Digistar" /></div>
+                <div class="carousel-item"><img src="img/Bangkit Academy (Machine Learning Student).jpg" alt="Bangkit" /></div>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselInternCertificate" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselInternCertificate" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              </button>
+            </div>
+          </div>
+        </div><!-- /tab-content -->
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section contact">
+      <div class="container container-narrow text-center">
+        <h2 class="section-title">Contact me!</h2>
+        <div class="d-flex gap-3 justify-content-center mt-3 contact-icons">
+          <a href="https://instagram.com/nadenggansrgr_" target="_blank"><img src="img/instagram_icon.png" alt="Instagram" /></a>
+          <a href="https://www.tiktok.com/@nadenggan_" target="_blank"><img src="img/tiktok_icon.png" alt="Tiktok" /></a>
+          <a href="https://www.linkedin.com/in/nadenggansrgr" target="_blank"><img src="img/linkedin_icon.png" alt="LinkedIn" /></a>
+          <a href="mailto:talithaansiregar@gmail.com" target="_blank"><img src="img/email_icon.png" alt="Email" /></a>
+          <a href="https://gitlab.com/nadenggan/" target="_blank"><img src="img/GitLab.png" alt="GitLab" /></a>
+          <a href="https://github.com/nadenggan/" target="_blank"><img src="img/GitHub.png" alt="GitHub" /></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODALS -->
+    <!-- Tech Modal -->
+    <div class="modal fade" id="techModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title" id="techModalTitle"></h3>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div id="modalCarouselTech" class="carousel slide">
+              <div class="carousel-inner" id="techModalCarouselInner"></div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#modalCarouselTech" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#modalCarouselTech" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+              </button>
+            </div>
+            <ul id="techModalDesc" class="mt-3"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Design Modal -->
+    <div class="modal fade" id="designModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title" id="designModalTitle"></h3>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div id="modalCarouselDesign" class="carousel slide">
+              <div class="carousel-inner" id="designModalCarouselInner"></div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#modalCarouselDesign" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#modalCarouselDesign" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Social Modal -->
+    <div class="modal fade" id="socialModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title" id="socialModalTitle"></h3>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div id="modalCarouselSocial" class="carousel slide">
+              <div class="carousel-inner" id="socialModalCarouselInner"></div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#modalCarouselSocial" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#modalCarouselSocial" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+              </button>
+            </div>
+            <p class="mt-2 text-center"><strong>Role:</strong> <span id="socialModalRole"></span></p>
+            <ul id="socialModalTaskList" class="mt-2"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Brand Modal -->
+    <div class="modal fade" id="brandModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="brandModalTitle"></h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p id="brandModalDesc" class="mb-3"></p>
+
+            <div class="accordion" id="brandAcc">
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#brandLogo" aria-expanded="true">
+                    Logo
+                  </button>
+                </h2>
+                <div id="brandLogo" class="accordion-collapse collapse show" data-bs-parent="#brandAcc">
+                  <div class="accordion-body brand d-flex flex-wrap gap-3" id="brandLogoWrap"></div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#brandPoster">
+                    Poster & Catalog
+                  </button>
+                </h2>
+                <div id="brandPoster" class="accordion-collapse collapse" data-bs-parent="#brandAcc">
+                  <div class="accordion-body brand d-flex flex-wrap gap-3" id="brandPosterWrap"></div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#brandTesti">
+                    Testimoni & Documentation
+                  </button>
+                </h2>
+                <div id="brandTesti" class="accordion-collapse collapse" data-bs-parent="#brandAcc">
+                  <div class="accordion-body brand d-flex flex-wrap gap-3" id="brandTestiWrap"></div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#brandLink">
+                    Link Campaign
+                  </button>
+                </h2>
+                <div id="brandLink" class="accordion-collapse collapse" data-bs-parent="#brandAcc">
+                  <div class="accordion-body brand d-flex flex-column gap-2" id="brandLinkWrap"></div>
+                </div>
+              </div>
+            </div>
+          </div><!-- /modal-body -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+      crossorigin="anonymous"></script>
+
+    <!-- Page Scripts -->
+    <script>
+      // TECH MODAL
+      const techModal = document.getElementById('techModal');
+      techModal.addEventListener('show.bs.modal', (e) => {
+        const btn = e.relatedTarget;
+        const title = btn.getAttribute('data-title');
+        const images = JSON.parse(btn.getAttribute('data-images') || '[]');
+        const desc = btn.getAttribute('data-desc') || '';
+
+        document.getElementById('techModalTitle').textContent = title || 'Detail';
+        const inner = document.getElementById('techModalCarouselInner');
+        inner.innerHTML = '';
+        images.forEach((src, i) => {
+          const div = document.createElement('div');
+          div.className = 'carousel-item' + (i===0 ? ' active':'');
+
+
+          // cek apakah judul "Soilink App"
+          if (title === "Soilink App") {
+            div.innerHTML = `<img src="${src}" class="d-block mx-auto" style="max-height:80vh;object-fit:contain;background:#000;">`;
+          } else {
+            div.innerHTML = `<img src="${src}" class="d-block w-100" style="height:250px;object-fit:cover;">`;
+          }
+
+          inner.appendChild(div);
+        });
+
+        const ul = document.getElementById('techModalDesc');
+        ul.innerHTML = '';
+        if (desc) {
+          const li = document.createElement('li');
+          li.textContent = desc;
+          ul.appendChild(li);
+        }
+      });
+
+      // DESIGN MODAL
+      const designModal = document.getElementById('designModal');
+      designModal.addEventListener('show.bs.modal', (e) => {
+        const btn = e.relatedTarget;
+        const title = btn.getAttribute('data-title') || 'Design';
+        const images = JSON.parse(btn.getAttribute('data-images') || '[]');
+
+        document.getElementById('designModalTitle').textContent = title;
+        const inner = document.getElementById('designModalCarouselInner');
+        inner.innerHTML = '';
+        images.forEach((src, i) => {
+          const div = document.createElement('div');
+          div.className = 'carousel-item' + (i===0 ? ' active':'');
+          div.innerHTML = `<img src="${src}" class="d-block w-100" style="object-fit:cover;">`;
+          inner.appendChild(div);
+        });
+      });
+
+      // SOCIAL MODAL
+      const socialModal = document.getElementById('socialModal');
+      socialModal.addEventListener('show.bs.modal', (e) => {
+        const btn = e.relatedTarget;
+        const title = btn.getAttribute('data-soc-title') || 'Social Activity';
+        const role = btn.getAttribute('data-soc-role') || '-';
+        const images = JSON.parse(btn.getAttribute('data-soc-images') || '[]');
+        const tasks = JSON.parse(btn.getAttribute('data-soc-tasks') || '[]');
+
+        document.getElementById('socialModalTitle').textContent = title;
+        document.getElementById('socialModalRole').textContent = role;
+
+        const inner = document.getElementById('socialModalCarouselInner');
+        inner.innerHTML = '';
+        images.forEach((src, i) => {
+          const div = document.createElement('div');
+          div.className = 'carousel-item' + (i===0 ? ' active':'');
+          div.innerHTML = `<img src="${src}" class="d-block w-100" style="height:300px;object-fit:cover;">`;
+          inner.appendChild(div);
+        });
+
+        const list = document.getElementById('socialModalTaskList');
+        list.innerHTML = '';
+        tasks.forEach(t => {
+          const li = document.createElement('li');
+          li.textContent = t;
+          list.appendChild(li);
+        });
+      });
+
+      // BRAND MODAL
+      const brandModal = document.getElementById('brandModal');
+      brandModal.addEventListener('show.bs.modal', (e) => {
+        const btn = e.relatedTarget;
+        const title = btn.getAttribute('data-brand-title') || 'Brand';
+        const desc = btn.getAttribute('data-brand-desc') || '';
+        const logo = btn.getAttribute('data-brand-logo') || '';
+        const posters = JSON.parse(btn.getAttribute('data-brand-poster') || '[]');
+        const testis = JSON.parse(btn.getAttribute('data-brand-testi') || '[]');
+        const links = JSON.parse(btn.getAttribute('data-brand-link') || '[]');
+
+        document.getElementById('brandModalTitle').textContent = title;
+        document.getElementById('brandModalDesc').textContent = desc;
+
+        const logoWrap = document.getElementById('brandLogoWrap');
+        logoWrap.innerHTML = logo ? `<img src="${logo}" style="width:200px">` : '';
+
+        const posterWrap = document.getElementById('brandPosterWrap');
+        posterWrap.innerHTML = '';
+        posters.forEach(src => posterWrap.innerHTML += `<img src="${src}" style="width:200px">`);
+
+        const testiWrap = document.getElementById('brandTestiWrap');
+        testiWrap.innerHTML = '';
+        testis.forEach(src => testiWrap.innerHTML += `<img src="${src}" style="width:200px">`);
+
+        const linkWrap = document.getElementById('brandLinkWrap');
+        linkWrap.innerHTML = '';
+        links.forEach((href, i) => linkWrap.innerHTML += `<a href="${href}" target="_blank" class="btn btn-outline btn-sm">Link ${i+1}</a>`);
+      });
+    </script>
+  </body>
+</html>
